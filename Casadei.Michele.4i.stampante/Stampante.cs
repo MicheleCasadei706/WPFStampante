@@ -8,6 +8,7 @@ namespace Casadei.Michele._4i.stampante
 {
     public class Stampante
     {
+        //4 serbatoi di colore: CMYB e un cassetto di fogli (tutte property int)
         public int C { get; set; }
         public int M { get; set; }
         public int Y { get; set; }
@@ -20,6 +21,7 @@ namespace Casadei.Michele._4i.stampante
             C = M = Y = B = 100;
             Fogli = 200;
         }
+        //un metodo int StatoInchiostro( Colore c ) che torna la quantità di inchiostro presente nei 4 serbatoi
         public int StatoInchiostro(string s)
         {
             switch (s)
@@ -39,6 +41,7 @@ namespace Casadei.Michele._4i.stampante
             }
             return 0;
         }
+        //un metodo void SostituisciColore( Colore c ) che rimpiazza un serbatoio di inchiostro e lo riporta a 100
         public void SostituisiciColore(string s)
         {
             switch (s)
@@ -60,11 +63,13 @@ namespace Casadei.Michele._4i.stampante
                     return;
             }
 
-        }       
+        } 
+        //un metodo int StatoCarta() che mi ritorna la quantità di fogli nel cassetto
         public int StatoCarta()
         {
             return Fogli;
         }
+        //un metodo void AggiungiCarta( int qta ) che aggiunge fogli fino ad un max di 200
         public void AggiungiCarta(int qta)
         {
             if (qta < 0) qta = 0;
@@ -74,6 +79,7 @@ namespace Casadei.Michele._4i.stampante
             if (Fogli > 200) Fogli = 200;
         }
 
+        //un metodo bool Stampa( Pagina p ) (che torna false, se l'inchiostro non è sufficiente per stampare)
         public bool Stampa(Pagina p)
         {
             if (Fogli == 0) return false;
