@@ -8,33 +8,95 @@ namespace Casadei.Michele._4i.stampante
 {
     public class Pagina
     {
-        //4 attributi CMYB che, se usata per stampare, consuma i serbatoi della stampante
-        public int B { get; set; }
-        public int Y { get; set; }
-        public int M { get; set; }
-        public int C { get; set; }
-        
-        //un costruttore che accetta colori specifici al massimo di valore 3
-        public Pagina(int c, int m, int y, int b)
-        {
-            if (c > 3 || m > 3 || y > 3 || b > 3)
-                throw new ArgumentException("L'inchiostro è insufficiente");
+        // Variabili private per i livelli di colore (ciano, magenta, giallo, nero)
+        private int c;
+        private int m;
+        private int y;
+        private int k;
 
+        // Proprietà per l'accesso e la modifica del livello di colore ciano
+        public int C
+        {
+            get
+            {
+                return c;
+            }
+            set
+            {
+                // Assicura che il valore sia compreso tra 0 e MAX-1, altrimenti solleva un'eccezione
+                if (value >= MAX || value < 0)
+                    throw new ArgumentOutOfRangeException($"Il valore inserito è' proibito \n (il valore deve essere compreso tra 0 e {MAX - 1})");
+                c = value;
+            }
+        }
+
+        // Proprietà per l'accesso e la modifica del livello di colore magenta
+        public int M
+        {
+            get
+            {
+                return m;
+            }
+            set
+            {
+                if (value >= MAX || value < 0)
+                    throw new ArgumentOutOfRangeException($"Il valore inserito e' proibito \n (il valore deve essere compreso tra 0 e {MAX - 1})");
+                m = value;
+            }
+        }
+
+        // Proprietà per l'accesso e la modifica del livello di colore giallo
+        public int Y
+        {
+            get
+            {
+                return y;
+            }
+            set
+            {
+                if (value >= MAX || value < 0)
+                    throw new ArgumentOutOfRangeException($"Il valore inserito e' proibito \n (il valore deve essere compreso tra 0 e {MAX - 1})");
+                y = value;
+            }
+        }
+
+        // Proprietà per l'accesso e la modifica del livello di colore nero
+        public int K
+        {
+            get
+            {
+                return k;
+            }
+            set
+            {
+                if (value >= MAX || value < 0)
+                    throw new ArgumentOutOfRangeException($"Il valore inserito è' proibito \n (il valore deve essere compreso tra 0 e {MAX - 1})");
+                k = value;
+            }
+        }
+
+        // Costante che rappresenta il massimo valore consentito per i livelli di colore
+        private const int MAX = 4;
+
+
+        // Costruttore che inizializza la Pagina con valori specifici per i livelli di colore
+        public Pagina(int c, int m, int y, int k)
+        {
             C = c;
             M = m;
             Y = y;
-            B = b;
+            K = k;
         }
 
-        //un costruttore che crea una Pagina con colori random
+        // Costruttore predefinito che inizializza la Pagina con valori casuali per i livelli di colore
         public Pagina()
         {
             var r = new Random();
 
-            C = r.Next(4);
-            M = r.Next(4);
-            Y = r.Next(4);
-            B = r.Next(4);
+            C = r.Next(MAX);
+            M = r.Next(MAX);
+            Y = r.Next(MAX);
+            K = r.Next(MAX);
         }
     }
 }
