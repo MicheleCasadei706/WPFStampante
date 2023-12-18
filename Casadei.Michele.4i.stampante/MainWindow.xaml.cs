@@ -19,82 +19,112 @@ namespace Casadei.Michele._4i.stampante
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window
     {
-
-
         Models.Stampante stampante = new();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            MessageBoxResult result = MessageBox.Show("Vuoi riprendere da dove eri rimasto?", "ATTENZIONE", MessageBoxButton.YesNo);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    LoadStatus();
+                    Updater();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+            MessageBoxResult result = MessageBox.Show("Vuoi salvare lo stato della stampante?", "ATTENZIONE", MessageBoxButton.YesNo);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    SaveStatus();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
 
         private void cyan_Click(object sender, RoutedEventArgs e)
         {
-            stampante.SostituisiciColore("cyan");
-            updater();
+            stampante.SostituisiciColore(1);
+
+            Updater();
         }
 
         private void magenta_Click(object sender, RoutedEventArgs e)
         {
-            stampante.SostituisiciColore("magenta");
-            updater();
+            stampante.SostituisiciColore(2);
+
+            Updater();
         }
 
         private void yellow_Click(object sender, RoutedEventArgs e)
         {
-            stampante.SostituisiciColore("yellow");
-            updater();
+            stampante.SostituisiciColore(3);
+
+            Updater();
         }
 
         private void black_Click(object sender, RoutedEventArgs e)
         {
-            stampante.SostituisiciColore("black");
-            updater();
+            stampante.SostituisiciColore(4);
+
+            Updater();
         }
 
         private void paper_Click(object sender, RoutedEventArgs e)
         {
-            int p = Convert.ToInt32(qtaPaper.Text);
-            stampante.AggiungiCarta(p);
-            updater();
+            int p = 0;
+            try
+            {
+                p = Convert.ToInt32(qtaPaper.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Hai inserito un valore non valido");
+                qtaPaper.Text = p.ToString();
+            }
+
+            qtaPaper.Text = stampante.AggiungiCarta(p).ToString();
+
+            Updater();
         }
 
         private void test_Click(object sender, RoutedEventArgs e)
         {
+            Pagina p = new Pagina();
 
-            Models.Pagina p = new Models.Pagina();
+            qtaCyan.Text = p.C.ToString();
+            qtaMagenta.Text = p.M.ToString();
+            qtaYellow.Text = p.Y.ToString();
+            qtaBlack.Text = p.K.ToString();
 
-            if (stampante.Stampa(p))
-            {
-                statusPrint.Background = Brushes.Green;
-                statusPrint.Foreground = Brushes.White;
-            }
-            else
-            {
-                statusPrint.Background = Brushes.Red;
-                statusPrint.Foreground = Brushes.White;
-            }
-
-            updater();
         }
 
         private void print_Click(object sender, RoutedEventArgs e)
         {
+
             int c = Convert.ToInt32(qtaCyan.Text);
             int m = Convert.ToInt32(qtaMagenta.Text);
             int y = Convert.ToInt32(qtaYellow.Text);
             int b = Convert.ToInt32(qtaBlack.Text);
 
-            qtaCyan.Text = "0";
-            qtaMagenta.Text = "0";
-            qtaYellow.Text = "0";
-            qtaBlack.Text = "0";
-
             try
             {
-                Models.Pagina p = new Models.Pagina(c, m, y, b);
+                Pagina p = new Pagina(c, m, y, b);
 
                 if (stampante.Stampa(p))
                 {
@@ -113,17 +143,150 @@ namespace Casadei.Michele._4i.stampante
                 MessageBox.Show(ex.Message);
             }
 
-            updater();
+            Updater();
         }
 
-        private void updater()
+
+
+        private void PaperMinus_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaPaper.Text);
+
+            if (value > 0)
+                value--;
+
+            qtaPaper.Text = value.ToString();
+
+        }
+
+        private void PaperAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaPaper.Text);
+
+            value++;
+
+            qtaPaper.Text = value.ToString();
+        }
+
+
+        private void CyanMinus_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaCyan.Text);
+
+            if (value > 0)
+                value--;
+
+            qtaCyan.Text = value.ToString();
+
+        }
+
+        private void CyanAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaCyan.Text);
+
+            if (value < 3)
+                value++;
+
+            qtaCyan.Text = value.ToString();
+        }
+
+        private void MagentaMinus_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaMagenta.Text);
+
+            if (value > 0)
+                value--;
+
+            qtaMagenta.Text = value.ToString();
+
+        }
+
+        private void MagentaAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaMagenta.Text);
+
+            if (value < 3)
+                value++;
+
+            qtaMagenta.Text = value.ToString();
+        }
+
+        private void YellowMinus_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaYellow.Text);
+
+            if (value > 0)
+                value--;
+
+            qtaYellow.Text = value.ToString();
+
+        }
+
+        private void YellowAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaYellow.Text);
+
+            if (value < 3)
+                value++;
+
+            qtaYellow.Text = value.ToString();
+        }
+
+        private void BlackMinus_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaBlack.Text);
+
+            if (value > 0)
+                value--;
+
+            qtaBlack.Text = value.ToString();
+
+        }
+
+        private void BlackAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int value = Convert.ToInt32(qtaBlack.Text);
+
+            if (value < 3)
+                value++;
+
+            qtaBlack.Text = value.ToString();
+        }
+
+        private void SaveStatus()
+        {
+            using (StreamWriter sw = new StreamWriter("saves.csv"))
+            {
+                sw.Write(stampante.ToString());
+            }
+        }
+        private void LoadStatus()
+        {
+            using (StreamReader sr = new StreamReader("saves.csv"))
+            {
+                string s = sr.ReadToEnd();
+
+                try
+                {
+                    stampante = new Models.Stampante(s);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    stampante = new Models.Stampante();
+                }
+            }
+        }
+
+        private void Updater()
         {
             resources.Text = "Livello inchiostro: \n\n" +
                              $"Ciano {stampante.C}% \n" +
                              $"Magenta {stampante.M}% \n" +
                              $"Giallo {stampante.Y}% \n" +
-                             $"Nero {stampante.B}% \n\n\n" +
+                             $"Nero {stampante.K}% \n\n\n" +
                              $"Nel cassetto ci sono {stampante.Fogli}/200 fogli";
         }
+
     }
 }
