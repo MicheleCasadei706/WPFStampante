@@ -9,22 +9,19 @@ La classe **Stampante** rappresenta una stampante con quattro serbatoi di colore
 
 - **Stampa**: Il metodo `Stampa` prende in input una pagina e restituisce `true` se è possibile stamparla (abbastanza inchiostro e carta disponibili), altrimenti restituisce `false`.
 
-- **StatoInchiostro**: Il metodo `StatoInchiostro` restituisce la quantità di inchiostro presente in un serbatoio (colore).
-
-- **StatoCarta**: Il metodo `StatoCarta` restituisce la quantità di fogli di carta disponibili nel cassetto.
-
 - **SostituisciColore**: Il metodo `SostituisciColore` sostituisce un serbatoio di inchiostro (colore) e lo riporta a 100.
 
 - **AggiungiCarta**: Il metodo `AggiungiCarta` aggiunge fogli di carta fino a un massimo di 200 nel cassetto.
+
 
 
 ### `Pagina`
 
 La classe `Pagina` rappresenta una pagina colorata con quattro attributi, che corrispondono ai colori CMYB (Ciano, Magenta, Giallo, Nero). La classe include due costruttori: uno che accetta valori specifici per i colori con un massimo di 3 e un costruttore che crea una pagina con colori casuali.
 
-## MainWindow
+## Interfaccia Utente
 
-L'interfaccia utente contiene 4 pulsanti per cambiare il serbatoio il colore della stampante, aggiungere carta, eseguire un test di stampa e stampare una pagina specifica. Inoltre la finestra visualizza anche lo stato corrente dell'inchiostro e della carta.
+L'interfaccia utente (`MainWindow`) contiene 4 pulsanti per cambiare il serbatoio il colore della stampante, aggiungere carta, eseguire un test di stampa e stampare una pagina specifica. Inoltre la finestra visualizza anche lo stato corrente dell'inchiostro e della carta.
 
 ## Diagramma UML
 
